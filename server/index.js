@@ -19,10 +19,14 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.warn("Missing SUPABASE_URL or SUPABASE_ANON_KEY in server/.env");
 }
 
-const supabase = createClient(supabaseUrl || "", supabaseAnonKey || "");
-const supabaseAdmin = supabaseServiceKey
-  ? createClient(supabaseUrl || "", supabaseServiceKey)
-  : null;
+const supabase =
+  supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey)
+    : null;
+const supabaseAdmin =
+  supabaseUrl && supabaseServiceKey
+    ? createClient(supabaseUrl, supabaseServiceKey)
+    : null;
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -91,6 +95,7 @@ function getBearer(req) {
 
 async function requireAdmin(req, res, next) {
   try {
+    if (!supabase) return res.status(503).json({ error: "Server not configured." });
     const token = getBearer(req);
     if (!token) return res.status(401).json({ error: "Unauthorized." });
 
@@ -114,12 +119,13 @@ function userClient(token) {
 app.get("/api/health", (_req, res) => {
   res.json({
     status: "ok",
-    supabase: Boolean(supabaseUrl),
+    supabase: Boolean(supabase),
     adminClient: Boolean(supabaseAdmin),
   });
 });
 
 app.get("/api/collections", async (_req, res) => {
+  if (!supabase) return res.status(503).json({ error: "Server not configured." });
   const { data, error } = await supabase
     .from("collections")
     .select("*, collection_images(*)")
@@ -132,6 +138,7 @@ app.get("/api/collections", async (_req, res) => {
 });
 
 app.post("/api/subscribe", async (req, res) => {
+  if (!supabase) return res.status(503).json({ error: "Server not configured." });
   const email = String(req.body?.email ?? "").trim().toLowerCase();
   if (!emailPattern.test(email)) {
     return res.status(400).json({ error: "Enter a valid email address." });
