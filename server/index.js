@@ -378,12 +378,18 @@ app.get("/api/admin/subscribers", requireAdmin, async (req, res) => {
   res.json({ subscribers: data ?? [] });
 });
 
-app.use(express.static(CLIENT_DIST));
+// Local/production Node: serve the Vite build. On Vercel, static files come from client/dist.
+if (!process.env.VERCEL) {
+  app.use(express.static(CLIENT_DIST));
+  app.get("/*splat", (_req, res) => {
+    res.sendFile(path.join(CLIENT_DIST, "index.html"));
+  });
+}
 
-app.get("/*splat", (_req, res) => {
-  res.sendFile(path.join(CLIENT_DIST, "index.html"));
-});
+module.exports = app;
 
-app.listen(PORT, () => {
-  console.log(`troy server listening on http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`troy server listening on http://localhost:${PORT}`);
+  });
+}
