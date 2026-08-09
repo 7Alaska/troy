@@ -4,11 +4,8 @@ import { Footer } from "./components/Footer";
 import { Hero } from "./sections/Hero";
 import { CollectionMarquee } from "./sections/CollectionMarquee";
 import { Collections } from "./sections/Collections";
-import { HowItWorks } from "./sections/HowItWorks";
 import { Testimonials } from "./sections/Testimonials";
-import { Pricing } from "./sections/Pricing";
 import { Faq } from "./sections/Faq";
-import { CtaBand } from "./sections/CtaBand";
 import { AdminApp } from "./admin/AdminApp";
 import { AuthProvider } from "./admin/AuthContext";
 
@@ -20,11 +17,8 @@ function Storefront() {
         <Hero />
         <CollectionMarquee />
         <Collections />
-        <HowItWorks />
         <Testimonials />
-        <Pricing />
         <Faq />
-        <CtaBand />
       </main>
       <Footer />
     </div>

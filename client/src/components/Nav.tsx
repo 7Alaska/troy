@@ -6,7 +6,6 @@ import { useAuth } from "../admin/AuthContext";
 
 const links = [
   { label: "Collections", href: "#collections" },
-  { label: "All Access", href: "#pricing" },
   { label: "FAQ", href: "#faq" },
 ];
 

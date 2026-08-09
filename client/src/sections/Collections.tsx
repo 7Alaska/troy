@@ -86,7 +86,7 @@ export function Collections() {
         {items.map((item) => (
           <a
             key={item.id ?? item.name}
-            href="#pricing"
+            href="#faq"
             data-card
             className="group w-[68vw] shrink-0 snap-start sm:w-[42vw] md:w-[280px] lg:w-[300px]"
           >

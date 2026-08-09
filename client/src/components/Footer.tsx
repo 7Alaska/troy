@@ -28,7 +28,6 @@ export function Footer() {
             <p className="text-sm font-medium text-bone">Shop</p>
             <ul className="mt-4 flex flex-col gap-3 text-sm text-mute">
               <li><a href="#collections" className="transition-colors hover:text-bone">Collections</a></li>
-              <li><a href="#pricing" className="transition-colors hover:text-bone">All Access</a></li>
             </ul>
           </div>
 
