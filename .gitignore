@@ -1,0 +1,14 @@
+node_modules
+dist
+.env
+.env.local
+.DS_Store
+*.log
+client/dist
+server/.env
+client/.env
+server/assets/mockup-preview.png
+server/assets/mockup-test.jpg
+server/assets/mockup-green-check.jpg
+server/assets/mockup-transparent-test.png
+server/assets/svg-frame-test.png

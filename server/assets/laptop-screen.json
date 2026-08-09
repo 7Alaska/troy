@@ -1,0 +1,16 @@
+{
+  "width": 1024,
+  "height": 667,
+  "screen": {
+    "left": 91,
+    "top": 56,
+    "width": 842,
+    "height": 520,
+    "rx": 16
+  },
+  "notch": {
+    "width": 148,
+    "height": 26,
+    "rx": 9
+  }
+}
