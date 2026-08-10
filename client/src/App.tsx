@@ -16,8 +16,10 @@ function Storefront() {
     <div className="bg-ink">
       <Nav />
       <main>
-        <Hero />
-        <CollectionMarquee />
+        <div className="flex h-dvh flex-col">
+          <Hero />
+          <CollectionMarquee />
+        </div>
         <Collections />
         <Testimonials />
         <Faq />

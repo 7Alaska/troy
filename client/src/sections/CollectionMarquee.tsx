@@ -20,7 +20,7 @@ export function CollectionMarquee() {
   const items = [...names, ...names];
 
   return (
-    <section className="border-b border-line bg-ink py-6">
+    <section className="shrink-0 border-b border-line bg-ink py-6">
       <div className="no-scrollbar overflow-hidden">
         <div className="animate-marquee flex w-max items-center gap-10">
           {[...items, ...items].map((name, i) => (
