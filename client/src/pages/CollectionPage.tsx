@@ -45,9 +45,13 @@ export function CollectionPage() {
     [collection],
   );
 
-  const images = collection?.collection_images ?? [];
+  const images = useMemo(() => {
+    const all = collection?.collection_images ?? [];
+    const withoutThumb = all.filter((img) => !img.is_thumbnail);
+    return withoutThumb.length > 0 ? withoutThumb : all;
+  }, [collection]);
   const activeImage = images[activeIndex] ?? images[0];
-  const thumb = collection?.thumbnail_url || activeImage?.image_url || collection?.image_url;
+  const backdrop = activeImage?.image_url || collection?.image_url;
   const mockup = collection?.mockup_url || collection?.image_url;
 
   useEffect(() => {
@@ -64,8 +68,7 @@ export function CollectionPage() {
         setCollection(next);
         const token = getDownloadToken(next.slug);
         if (Number(next.price) <= 0 || token) setUnlocked(true);
-        const thumbIdx = next.collection_images.findIndex((img) => img.is_thumbnail);
-        setActiveIndex(thumbIdx >= 0 ? thumbIdx : 0);
+        setActiveIndex(0);
       })
       .catch((err: Error) => {
         if (!cancelled) setError(err.message || "Failed to load collection.");
@@ -174,7 +177,7 @@ export function CollectionPage() {
           <section className="grid lg:grid-cols-[minmax(0,1.15fr)_minmax(140px,0.38fr)_minmax(280px,0.7fr)]">
             <div className="relative min-h-[52vh] overflow-hidden border-b border-line lg:min-h-[calc(100dvh-5rem)] lg:border-b-0 lg:border-r">
               <img
-                src={thumb}
+                src={backdrop}
                 alt=""
                 aria-hidden="true"
                 className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl"

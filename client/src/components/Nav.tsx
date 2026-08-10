@@ -24,7 +24,7 @@ function ThemeToggle({ className = "" }: { className?: string }) {
       variant="circle"
       duration={450}
       aria-label={theme === "light" ? "Switch to dark theme" : "Switch to light theme"}
-      className={`inline-flex size-9 items-center justify-center rounded-full border border-line bg-panel text-bone transition-colors hover:border-bone/40 ${className}`}
+      className={`inline-flex size-9 items-center justify-center text-bone ${className}`}
     />
   );
 }
