@@ -8,6 +8,8 @@ import { Testimonials } from "./sections/Testimonials";
 import { Faq } from "./sections/Faq";
 import { AdminApp } from "./admin/AdminApp";
 import { AuthProvider } from "./admin/AuthContext";
+import { ThemeProvider } from "./theme/ThemeProvider";
+import { CollectionPage } from "./pages/CollectionPage";
 
 function Storefront() {
   return (
@@ -27,15 +29,18 @@ function Storefront() {
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Storefront />} />
-          <Route path="/admin/*" element={<AdminApp />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Storefront />} />
+            <Route path="/collections/:slug" element={<CollectionPage />} />
+            <Route path="/admin/*" element={<AdminApp />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

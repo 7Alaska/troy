@@ -1,4 +1,5 @@
 import { InstagramLogo, TiktokLogo, YoutubeLogo } from "@phosphor-icons/react";
+import { Link } from "react-router-dom";
 import logo from "../assets/logo-mark.png";
 
 export function Footer() {
@@ -27,25 +28,53 @@ export function Footer() {
           <div>
             <p className="text-sm font-medium text-bone">Shop</p>
             <ul className="mt-4 flex flex-col gap-3 text-sm text-mute">
-              <li><a href="#collections" className="transition-colors hover:text-bone">Collections</a></li>
+              <li>
+                <Link to="/#collections" className="transition-colors hover:text-bone">
+                  Collections
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
             <p className="text-sm font-medium text-bone">Support</p>
             <ul className="mt-4 flex flex-col gap-3 text-sm text-mute">
-              <li><a href="#faq" className="transition-colors hover:text-bone">FAQ</a></li>
-              <li><a href="mailto:hello@troy.shop" className="transition-colors hover:text-bone">Contact</a></li>
-              <li><a href="#faq" className="transition-colors hover:text-bone">Licensing</a></li>
+              <li>
+                <Link to="/#faq" className="transition-colors hover:text-bone">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <a href="mailto:hello@troy.shop" className="transition-colors hover:text-bone">
+                  Contact
+                </a>
+              </li>
+              <li>
+                <Link to="/#faq" className="transition-colors hover:text-bone">
+                  Licensing
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
             <p className="text-sm font-medium text-bone">Legal</p>
             <ul className="mt-4 flex flex-col gap-3 text-sm text-mute">
-              <li><a href="#" className="transition-colors hover:text-bone">Privacy</a></li>
-              <li><a href="#" className="transition-colors hover:text-bone">Terms</a></li>
-              <li><a href="#" className="transition-colors hover:text-bone">Refunds</a></li>
+              <li>
+                <a href="#" className="transition-colors hover:text-bone">
+                  Privacy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="transition-colors hover:text-bone">
+                  Terms
+                </a>
+              </li>
+              <li>
+                <a href="#" className="transition-colors hover:text-bone">
+                  Refunds
+                </a>
+              </li>
             </ul>
           </div>
         </div>

@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { Reveal } from "../components/Reveal";
 
 type CollectionCard = {
   id: string;
+  slug: string;
   name: string;
   description: string;
   thumbnail: string;
@@ -22,6 +24,7 @@ export function Collections() {
         const data = await res.json();
         const rows = (data.collections ?? []) as Array<{
           id: string;
+          slug: string;
           name: string;
           description: string;
           image_url: string;
@@ -32,6 +35,7 @@ export function Collections() {
         setItems(
           rows.map((row) => ({
             id: row.id,
+            slug: row.slug,
             name: row.name,
             description: row.description,
             thumbnail: row.thumbnail_url || row.image_url,
@@ -69,9 +73,9 @@ export function Collections() {
         className="no-scrollbar mt-14 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-2 md:px-10"
       >
         {items.map((item) => (
-          <a
+          <Link
             key={item.id}
-            href="#faq"
+            to={`/collections/${item.slug}`}
             data-card
             className="group w-[68vw] shrink-0 snap-start sm:w-[42vw] md:w-[280px] lg:w-[300px]"
           >
@@ -103,7 +107,7 @@ export function Collections() {
                 &euro;{Number(item.price).toFixed(0)}
               </p>
             </div>
-          </a>
+          </Link>
         ))}
         <div className="w-2 shrink-0 md:w-4" aria-hidden="true" />
       </div>

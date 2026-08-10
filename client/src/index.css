@@ -3,21 +3,48 @@
 @import "@fontsource/jetbrains-mono/400.css";
 @import "@fontsource/jetbrains-mono/500.css";
 
+:root,
+[data-theme="dark"] {
+  --ink: #0a0a0b;
+  --panel: #131316;
+  --panel-2: #19191c;
+  --line: rgba(255, 255, 255, 0.08);
+  --bone: #f3f2ee;
+  --mute: #9a999b;
+  --frost: #8fb7c7;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --ink: #f4f3ef;
+  --panel: #ffffff;
+  --panel-2: #ebeae4;
+  --line: rgba(10, 10, 11, 0.1);
+  --bone: #121214;
+  --mute: #6b6a6e;
+  --frost: #3f7f93;
+  color-scheme: light;
+}
+
 @theme {
   --font-sans: "Bricolage Grotesque Variable", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --color-ink: #0a0a0b;
-  --color-panel: #131316;
-  --color-panel-2: #19191c;
-  --color-line: rgba(255, 255, 255, 0.08);
-  --color-bone: #f3f2ee;
-  --color-mute: #9a999b;
-  --color-frost: #8fb7c7;
+  --color-ink: var(--ink);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-line: var(--line);
+  --color-bone: var(--bone);
+  --color-mute: var(--mute);
+  --color-frost: var(--frost);
 }
 
 html {
   color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
 }
 
 body {

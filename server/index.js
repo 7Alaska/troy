@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const path = require("node:path");
+const crypto = require("node:crypto");
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
@@ -124,6 +125,37 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
+const purchaseTokens = new Map();
+
+function issueDownloadToken(collectionId) {
+  const token = crypto.randomBytes(24).toString("hex");
+  purchaseTokens.set(token, {
+    collectionId,
+    expiresAt: Date.now() + 1000 * 60 * 60 * 24 * 7,
+  });
+  return token;
+}
+
+function tokenGrantsAccess(token, collectionId) {
+  const entry = purchaseTokens.get(token);
+  if (!entry) return false;
+  if (entry.expiresAt < Date.now()) {
+    purchaseTokens.delete(token);
+    return false;
+  }
+  return entry.collectionId === collectionId;
+}
+
+function sortCollectionImages(collection) {
+  if (!collection?.collection_images) return collection;
+  return {
+    ...collection,
+    collection_images: [...collection.collection_images].sort(
+      (a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0),
+    ),
+  };
+}
+
 app.get("/api/collections", async (_req, res) => {
   if (!supabase) return res.status(503).json({ error: "Server not configured." });
   const { data, error } = await supabase
@@ -134,7 +166,108 @@ app.get("/api/collections", async (_req, res) => {
     .order("created_at", { ascending: false });
 
   if (error) return res.status(500).json({ error: error.message });
-  res.json({ collections: data ?? [] });
+  res.json({ collections: (data ?? []).map(sortCollectionImages) });
+});
+
+app.get("/api/collections/:slug", async (req, res) => {
+  if (!supabase) return res.status(503).json({ error: "Server not configured." });
+  const slug = String(req.params.slug || "").trim();
+  if (!slug) return res.status(400).json({ error: "Missing collection slug." });
+
+  const { data, error } = await supabase
+    .from("collections")
+    .select("*, collection_images(*)")
+    .eq("slug", slug)
+    .eq("is_published", true)
+    .maybeSingle();
+
+  if (error) return res.status(500).json({ error: error.message });
+  if (!data) return res.status(404).json({ error: "Collection not found." });
+
+  res.json({ collection: sortCollectionImages(data) });
+});
+
+app.post("/api/collections/:slug/checkout", async (req, res) => {
+  if (!supabase) return res.status(503).json({ error: "Server not configured." });
+  const slug = String(req.params.slug || "").trim();
+  const email = String(req.body?.email ?? "").trim().toLowerCase();
+  const confirmPayment = Boolean(req.body?.confirmPayment);
+
+  const { data, error } = await supabase
+    .from("collections")
+    .select("id, name, slug, price, collection_images(id, image_url, sort_order)")
+    .eq("slug", slug)
+    .eq("is_published", true)
+    .maybeSingle();
+
+  if (error) return res.status(500).json({ error: error.message });
+  if (!data) return res.status(404).json({ error: "Collection not found." });
+
+  const price = Number(data.price) || 0;
+  const images = [...(data.collection_images ?? [])]
+    .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
+    .map((img) => img.image_url);
+
+  if (price <= 0) {
+    const downloadToken = issueDownloadToken(data.id);
+    return res.json({
+      free: true,
+      downloadToken,
+      images,
+      collection: { id: data.id, name: data.name, slug: data.slug, price },
+    });
+  }
+
+  if (!emailPattern.test(email)) {
+    return res.status(400).json({ error: "Enter a valid email address." });
+  }
+
+  if (!confirmPayment) {
+    return res.json({
+      requiresPayment: true,
+      price,
+      collection: { id: data.id, name: data.name, slug: data.slug, price },
+    });
+  }
+
+  // Payment provider not wired yet — stub unlock after explicit confirm.
+  const downloadToken = issueDownloadToken(data.id);
+  return res.json({
+    paid: true,
+    downloadToken,
+    images,
+    collection: { id: data.id, name: data.name, slug: data.slug, price },
+  });
+});
+
+app.get("/api/collections/:slug/download", async (req, res) => {
+  if (!supabase) return res.status(503).json({ error: "Server not configured." });
+  const slug = String(req.params.slug || "").trim();
+  const token = String(req.query.token || "").trim();
+
+  const { data, error } = await supabase
+    .from("collections")
+    .select("id, name, slug, price, collection_images(id, image_url, sort_order)")
+    .eq("slug", slug)
+    .eq("is_published", true)
+    .maybeSingle();
+
+  if (error) return res.status(500).json({ error: error.message });
+  if (!data) return res.status(404).json({ error: "Collection not found." });
+
+  const price = Number(data.price) || 0;
+  if (price > 0 && !tokenGrantsAccess(token, data.id)) {
+    return res.status(403).json({ error: "Purchase required." });
+  }
+
+  const images = [...(data.collection_images ?? [])]
+    .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
+    .map((img, i) => ({
+      url: img.image_url,
+      filename: `${data.slug}-${String(i + 1).padStart(2, "0")}.jpg`,
+    }));
+
+  res.json({ images, collection: { name: data.name, slug: data.slug, price } });
 });
 
 app.post("/api/subscribe", async (req, res) => {
