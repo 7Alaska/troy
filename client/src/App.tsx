@@ -17,8 +17,8 @@ function Storefront() {
       <Nav />
       <main>
         <Hero />
-        <CollectionMarquee />
         <Collections />
+        <CollectionMarquee />
         <Testimonials />
         <Faq />
       </main>

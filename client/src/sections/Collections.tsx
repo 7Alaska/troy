@@ -56,13 +56,13 @@ export function Collections() {
   }
 
   return (
-    <section id="collections" className="bg-ink py-24 md:py-32">
+    <section id="collections" className="bg-ink pt-6 pb-16 md:py-24">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal className="text-center">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-mute">
             {items.length} Collections
           </p>
-          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-bone md:text-5xl">
+          <h2 className="mt-2 hidden text-3xl font-semibold tracking-tight text-bone md:mt-4 md:block md:text-5xl">
             Pick your set.
           </h2>
         </Reveal>
@@ -70,7 +70,7 @@ export function Collections() {
 
       <div
         ref={trackRef}
-        className="no-scrollbar mt-14 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-2 md:px-10"
+        className="no-scrollbar mt-5 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-2 md:mt-14 md:px-10"
       >
         {items.map((item) => (
           <Link

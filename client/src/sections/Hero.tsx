@@ -3,7 +3,7 @@ import { Reveal } from "../components/Reveal";
 
 export function Hero() {
   return (
-    <section id="top" className="relative min-h-[78dvh] overflow-hidden md:min-h-[85dvh]">
+    <section id="top" className="relative min-h-[70dvh] overflow-hidden md:min-h-[80dvh]">
       <img
         src={heroImage}
         alt="Astronaut standing in dark water before a towering wave under a golden sky"
@@ -16,7 +16,7 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto flex min-h-[78dvh] max-w-[1400px] flex-col px-6 pt-24 pb-8 md:min-h-[85dvh] md:px-10 md:pb-10">
+      <div className="relative z-10 mx-auto flex min-h-[70dvh] max-w-[1400px] flex-col px-6 pt-24 pb-8 md:min-h-[80dvh] md:px-10 md:pb-10">
         <div className="flex flex-1 items-center justify-center text-center">
           <Reveal className="w-full max-w-3xl">
             <h1 className="text-4xl font-semibold leading-[1.1] tracking-tight text-white md:text-5xl lg:text-6xl">
