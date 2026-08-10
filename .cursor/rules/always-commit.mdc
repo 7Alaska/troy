@@ -1,0 +1,15 @@
+---
+description: Always commit and push after completing work in this project
+alwaysApply: true
+---
+
+# Always commit
+
+After finishing any task that changes files in this repo:
+
+1. Commit the relevant changes (do not wait for the user to ask).
+2. Push to `origin` on the current branch.
+3. Skip unrelated noise (e.g. accidental lockfile churn) unless it belongs with the change.
+4. Use a concise commit message focused on why.
+5. Do not amend unless the usual amend safety rules allow it.
+6. Never update git config, force-push, or skip hooks.

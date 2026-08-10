@@ -155,7 +155,7 @@ export function Nav() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-ink">
+      <header className="nav-vt fixed inset-x-0 top-0 z-50 border-b border-line bg-ink">
         <div className="mx-auto flex h-[72px] max-w-[1400px] items-center justify-between px-6 md:h-20 md:px-10">
           <Link to="/" className="relative z-[60] block shrink-0" aria-label="troy home">
             <img src={logo} alt="troy" className="logo-mark h-14 w-auto md:h-16" />

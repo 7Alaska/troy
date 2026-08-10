@@ -135,12 +135,19 @@ input {
   view-transition-name: troy-hero;
 }
 
-::view-transition-group(troy-hero) {
+.nav-vt {
+  view-transition-name: troy-nav;
+}
+
+::view-transition-group(troy-hero),
+::view-transition-group(troy-nav) {
   z-index: 10000;
   animation: none;
 }
 
 ::view-transition-old(troy-hero),
-::view-transition-new(troy-hero) {
+::view-transition-new(troy-hero),
+::view-transition-old(troy-nav),
+::view-transition-new(troy-nav) {
   animation: none;
 }
