@@ -1,29 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
-import { collections as fallbackCollections } from "../data";
 import { Reveal } from "../components/Reveal";
 
 type CollectionCard = {
-  id?: string;
+  id: string;
   name: string;
   description: string;
-  image: string;
-  thumbnail?: string;
-  mockup?: string;
-  price: string | number;
+  thumbnail: string;
+  mockup: string;
+  price: number;
 };
 
 export function Collections() {
   const trackRef = useRef<HTMLDivElement>(null);
-  const [items, setItems] = useState<CollectionCard[]>(
-    fallbackCollections.map((c) => ({
-      name: c.name,
-      description: c.description,
-      image: c.image,
-      thumbnail: c.image,
-      price: c.price,
-    })),
-  );
+  const [items, setItems] = useState<CollectionCard[]>([]);
 
   useEffect(() => {
     fetch("/api/collections")
@@ -39,23 +29,18 @@ export function Collections() {
           mockup_url?: string | null;
           price: number;
         }>;
-        if (rows.length > 0) {
-          setItems(
-            rows.map((row) => ({
-              id: row.id,
-              name: row.name,
-              description: row.description,
-              image: row.mockup_url || row.image_url,
-              thumbnail: row.thumbnail_url || row.image_url,
-              mockup: row.mockup_url || undefined,
-              price: row.price,
-            })),
-          );
-        }
+        setItems(
+          rows.map((row) => ({
+            id: row.id,
+            name: row.name,
+            description: row.description,
+            thumbnail: row.thumbnail_url || row.image_url,
+            mockup: row.mockup_url || row.image_url,
+            price: row.price,
+          })),
+        );
       })
-      .catch(() => {
-        // keep fallback local assets if API is offline
-      });
+      .catch(() => undefined);
   }, []);
 
   function scrollByCard(dir: -1 | 1) {
@@ -85,26 +70,25 @@ export function Collections() {
       >
         {items.map((item) => (
           <a
-            key={item.id ?? item.name}
+            key={item.id}
             href="#faq"
             data-card
             className="group w-[68vw] shrink-0 snap-start sm:w-[42vw] md:w-[280px] lg:w-[300px]"
           >
-            <div className="overflow-hidden rounded-2xl border border-line bg-panel">
-              <div className="relative aspect-[3/4] overflow-hidden bg-ink">
+            <div className="overflow-hidden rounded-2xl border border-line">
+              <div className="relative aspect-[3/4] overflow-hidden bg-panel">
                 <img
-                  src={item.thumbnail || item.image}
+                  src={item.thumbnail}
                   alt=""
                   aria-hidden="true"
-                  className="absolute inset-0 h-full w-full scale-110 object-cover opacity-30 blur-2xl"
+                  className="absolute inset-0 h-full w-full object-cover"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-ink/35" aria-hidden="true" />
-                <div className="relative z-10 flex h-full items-center justify-center p-6 md:p-8">
+                <div className="relative z-10 flex h-full items-center justify-center p-7 md:p-9">
                   <img
-                    src={item.mockup || item.image}
+                    src={item.mockup}
                     alt={`${item.name} wallpaper collection`}
-                    className="max-h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
+                    className="max-h-full w-full object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.45)] transition-transform duration-700 group-hover:scale-[1.03]"
                     loading="lazy"
                     decoding="async"
                   />
@@ -124,24 +108,26 @@ export function Collections() {
         <div className="w-2 shrink-0 md:w-4" aria-hidden="true" />
       </div>
 
-      <div className="mt-10 flex items-center justify-center gap-3">
-        <button
-          type="button"
-          aria-label="Previous collections"
-          onClick={() => scrollByCard(-1)}
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-bone transition-colors hover:border-bone/50 hover:bg-panel"
-        >
-          <CaretLeft size={18} weight="light" />
-        </button>
-        <button
-          type="button"
-          aria-label="Next collections"
-          onClick={() => scrollByCard(1)}
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-bone transition-colors hover:border-bone/50 hover:bg-panel"
-        >
-          <CaretRight size={18} weight="light" />
-        </button>
-      </div>
+      {items.length > 0 && (
+        <div className="mt-10 flex items-center justify-center gap-3">
+          <button
+            type="button"
+            aria-label="Previous collections"
+            onClick={() => scrollByCard(-1)}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-bone transition-colors hover:border-bone/50 hover:bg-panel"
+          >
+            <CaretLeft size={18} weight="light" />
+          </button>
+          <button
+            type="button"
+            aria-label="Next collections"
+            onClick={() => scrollByCard(1)}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-bone transition-colors hover:border-bone/50 hover:bg-panel"
+          >
+            <CaretRight size={18} weight="light" />
+          </button>
+        </div>
+      )}
     </section>
   );
 }

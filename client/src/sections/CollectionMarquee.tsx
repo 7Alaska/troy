@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Diamond } from "@phosphor-icons/react";
-import { collections as fallback } from "../data";
 
 export function CollectionMarquee() {
-  const [names, setNames] = useState(fallback.map((c) => c.name));
+  const [names, setNames] = useState<string[]>([]);
 
   useEffect(() => {
     fetch("/api/collections")
@@ -11,10 +10,12 @@ export function CollectionMarquee() {
         if (!res.ok) return;
         const data = await res.json();
         const rows = (data.collections ?? []) as { name: string }[];
-        if (rows.length > 0) setNames(rows.map((r) => r.name));
+        setNames(rows.map((r) => r.name));
       })
       .catch(() => undefined);
   }, []);
+
+  if (names.length === 0) return null;
 
   const items = [...names, ...names];
 
