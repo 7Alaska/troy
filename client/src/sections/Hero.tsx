@@ -1,4 +1,4 @@
-import heroImage from "../assets/generated/hero-painting.jpg";
+import heroImage from "../assets/background.png";
 import { Reveal } from "../components/Reveal";
 
 export function Hero() {
@@ -6,7 +6,7 @@ export function Hero() {
     <section id="top" className="relative min-h-[100dvh] overflow-hidden">
       <img
         src={heroImage}
-        alt="Oil painting of a boat on dark water under a stormy sunset"
+        alt="Astronaut standing in dark water before a towering wave under a golden sky"
         className="absolute inset-0 h-full w-full object-cover"
         fetchPriority="high"
         decoding="async"
