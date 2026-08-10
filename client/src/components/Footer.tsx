@@ -8,7 +8,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1400px] px-6 py-16 md:px-10">
         <div className="grid gap-12 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>
-            <img src={logo} alt="troy" className="h-20 w-auto md:h-24" />
+            <img src={logo} alt="troy" className="logo-mark h-20 w-auto md:h-24" />
             <p className="mt-4 max-w-[32ch] text-sm leading-relaxed text-mute">
               Matched wallpaper sets for MacBook and iPhone, shot in restrained tones.
             </p>

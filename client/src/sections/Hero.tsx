@@ -12,14 +12,14 @@ export function Hero() {
         decoding="async"
       />
       <div
-        className="absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/25 to-ink/80"
+        className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80"
         aria-hidden="true"
       />
 
       <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-[1400px] flex-col px-6 pt-24 pb-10 md:px-10 md:pb-14">
         <div className="flex flex-1 items-center justify-center text-center">
           <Reveal className="w-full max-w-3xl">
-            <h1 className="text-4xl font-semibold leading-[1.1] tracking-tight text-bone md:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-semibold leading-[1.1] tracking-tight text-white md:text-5xl lg:text-6xl">
               Wallpapers for people
               <br />
               who notice details.
@@ -28,13 +28,13 @@ export function Hero() {
         </div>
 
         <Reveal delay={0.1} className="mx-auto w-full max-w-md text-center">
-          <p className="text-base leading-relaxed text-bone/75">
+          <p className="text-base leading-relaxed text-white/75">
             Matched sets for MacBook and iPhone, released in small drops.
           </p>
           <div className="mt-6">
             <a
               href="#collections"
-              className="inline-block border border-bone bg-bone px-7 py-3 text-sm font-medium text-ink transition-transform active:scale-[0.98]"
+              className="inline-block border border-white bg-white px-7 py-3 text-sm font-medium text-black transition-transform active:scale-[0.98]"
             >
               Shop Collections
             </a>

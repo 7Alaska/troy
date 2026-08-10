@@ -16,13 +16,13 @@
 }
 
 [data-theme="light"] {
-  --ink: #f4f3ef;
+  --ink: #f3f2ee;
   --panel: #ffffff;
-  --panel-2: #ebeae4;
-  --line: rgba(10, 10, 11, 0.1);
+  --panel-2: #ebe9e3;
+  --line: rgba(10, 10, 11, 0.12);
   --bone: #121214;
-  --mute: #6b6a6e;
-  --frost: #3f7f93;
+  --mute: #5f5e62;
+  --frost: #2f6d80;
   color-scheme: light;
 }
 
@@ -69,6 +69,26 @@ input {
   color: var(--color-ink);
 }
 
+.logo-mark {
+  transition: filter 0.2s ease;
+}
+
+[data-theme="light"] .logo-mark {
+  filter: invert(1);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -93,4 +113,20 @@ input {
   .animate-marquee {
     animation: none;
   }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+  animation: none;
+  clip-path: var(--magicui-theme-vt-clip-from);
 }
