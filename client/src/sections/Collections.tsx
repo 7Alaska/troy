@@ -96,7 +96,7 @@ export function Collections() {
                   src={item.thumbnail || item.image}
                   alt=""
                   aria-hidden="true"
-                  className="absolute inset-0 h-full w-full scale-110 object-cover opacity-70 blur-2xl"
+                  className="absolute inset-0 h-full w-full scale-110 object-cover opacity-30 blur-2xl"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-ink/35" aria-hidden="true" />
