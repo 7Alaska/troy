@@ -45,14 +45,9 @@ export function CollectionPage() {
     [collection],
   );
 
-  const images = useMemo(() => {
-    const all = collection?.collection_images ?? [];
-    const withoutThumb = all.filter((img) => !img.is_thumbnail);
-    return withoutThumb.length > 0 ? withoutThumb : all;
-  }, [collection]);
+  const images = collection?.collection_images ?? [];
   const activeImage = images[activeIndex] ?? images[0];
-  const backdrop = activeImage?.image_url || collection?.image_url;
-  const mockup = collection?.mockup_url || collection?.image_url;
+  const photo = activeImage?.image_url;
 
   useEffect(() => {
     let cancelled = false;
@@ -175,21 +170,18 @@ export function CollectionPage() {
 
         {collection && !loading && !error && (
           <section className="grid lg:grid-cols-[minmax(0,1.15fr)_minmax(140px,0.38fr)_minmax(280px,0.7fr)]">
-            <div className="relative min-h-[52vh] overflow-hidden border-b border-line lg:min-h-[calc(100dvh-5rem)] lg:border-b-0 lg:border-r">
-              <img
-                src={backdrop}
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl"
-              />
-              <div className="absolute inset-0 bg-black/35" aria-hidden="true" />
-              <div className="relative z-10 flex h-full min-h-[52vh] items-center justify-center p-8 md:p-12 lg:min-h-[calc(100dvh-5rem)]">
+            <div className="relative min-h-[52vh] overflow-hidden border-b border-line bg-panel lg:min-h-[calc(100dvh-5rem)] lg:border-b-0 lg:border-r">
+              {photo ? (
                 <img
-                  src={mockup}
-                  alt={`${collection.name} on laptop`}
-                  className="max-h-[70vh] w-full max-w-xl object-contain drop-shadow-[0_24px_60px_rgba(0,0,0,0.55)]"
+                  src={photo}
+                  alt={`${collection.name} wallpaper ${activeIndex + 1}`}
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
-              </div>
+              ) : (
+                <div className="flex h-full min-h-[52vh] items-center justify-center text-sm text-mute lg:min-h-[calc(100dvh-5rem)]">
+                  No photos in this collection.
+                </div>
+              )}
             </div>
 
             <div className="flex gap-2 overflow-x-auto border-b border-line p-2 lg:flex-col lg:gap-0 lg:overflow-visible lg:border-b-0 lg:border-r lg:p-0">
