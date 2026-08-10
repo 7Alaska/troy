@@ -16,6 +16,8 @@ interface AnimatedThemeTogglerProps extends React.ComponentPropsWithoutRef<"butt
   duration?: number;
   variant?: TransitionVariant;
   fromCenter?: boolean;
+  /** Expand from near the bottom of the viewport (collection carousel), not the button. */
+  fromCarousel?: boolean;
   theme?: "light" | "dark";
   onThemeChange?: (theme: "light" | "dark") => void;
 }
@@ -128,6 +130,7 @@ export function AnimatedThemeToggler({
   duration = 400,
   variant,
   fromCenter = false,
+  fromCarousel = false,
   theme,
   onThemeChange,
   ...props
@@ -172,7 +175,17 @@ export function AnimatedThemeToggler({
 
     let x: number;
     let y: number;
-    if (fromCenter) {
+    if (fromCarousel) {
+      const carousel = document.querySelector(".collection-marquee");
+      if (carousel) {
+        const rect = carousel.getBoundingClientRect();
+        x = rect.left + rect.width / 2;
+        y = rect.top + rect.height / 2;
+      } else {
+        x = viewportWidth / 2;
+        y = viewportHeight - 40;
+      }
+    } else if (fromCenter) {
       x = viewportWidth / 2;
       y = viewportHeight / 2;
     } else {
@@ -248,7 +261,7 @@ export function AnimatedThemeToggler({
         })
         .catch(() => {});
     }
-  }, [shape, fromCenter, duration, isDark, isControlled, onThemeChange]);
+  }, [shape, fromCenter, fromCarousel, duration, isDark, isControlled, onThemeChange]);
 
   return (
     <button type="button" ref={buttonRef} onClick={toggleTheme} className={cn(className)} {...props}>

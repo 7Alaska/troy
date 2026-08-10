@@ -130,3 +130,17 @@ input {
   animation: none;
   clip-path: var(--magicui-theme-vt-clip-from);
 }
+
+.hero-vt {
+  view-transition-name: troy-hero;
+}
+
+::view-transition-group(troy-hero) {
+  z-index: 10000;
+  animation: none;
+}
+
+::view-transition-old(troy-hero),
+::view-transition-new(troy-hero) {
+  animation: none;
+}

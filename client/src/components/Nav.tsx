@@ -22,6 +22,7 @@ function ThemeToggle({ className = "" }: { className?: string }) {
       theme={theme}
       onThemeChange={setTheme}
       variant="circle"
+      fromCarousel
       duration={450}
       aria-label={theme === "light" ? "Switch to dark theme" : "Switch to light theme"}
       className={`inline-flex size-9 items-center justify-center text-bone ${className}`}

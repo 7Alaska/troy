@@ -3,7 +3,7 @@ import { Reveal } from "../components/Reveal";
 
 export function Hero() {
   return (
-    <section id="top" className="relative min-h-0 flex-1 overflow-hidden">
+    <section id="top" className="hero-vt relative min-h-0 flex-1 overflow-hidden">
       <img
         src={heroImage}
         alt="Astronaut standing in dark water before a towering wave under a golden sky"
