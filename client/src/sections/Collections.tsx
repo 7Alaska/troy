@@ -85,10 +85,10 @@ export function Collections() {
                   src={item.thumbnail}
                   alt=""
                   aria-hidden="true"
-                  className="absolute inset-0 h-full w-full scale-110 object-cover opacity-[0.1] blur-lg"
+                  className="absolute inset-0 h-full w-full scale-110 object-cover opacity-[0.28] blur-2xl"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-black/5" aria-hidden="true" />
+                <div className="absolute inset-0 bg-black/0" aria-hidden="true" />
                 <div className="relative z-10 flex h-full items-center justify-center p-7 md:p-9">
                   <img
                     src={item.mockup}
