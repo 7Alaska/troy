@@ -80,12 +80,12 @@ export function Collections() {
             className="group w-[68vw] shrink-0 snap-start sm:w-[42vw] md:w-[280px] lg:w-[300px]"
           >
             <div className="overflow-hidden rounded-2xl border border-line">
-              <div className="relative aspect-[3/4] overflow-hidden bg-panel">
+              <div className="relative aspect-[3/4] overflow-hidden bg-transparent">
                 <img
                   src={item.thumbnail}
                   alt=""
                   aria-hidden="true"
-                  className="absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-md"
+                  className="absolute inset-0 h-full w-full scale-110 object-cover opacity-90 blur-lg"
                   loading="lazy"
                 />
                 <div className="relative z-10 flex h-full items-center justify-center p-7 md:p-9">
