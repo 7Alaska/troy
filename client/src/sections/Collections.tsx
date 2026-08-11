@@ -85,7 +85,7 @@ export function Collections() {
                   src={item.thumbnail}
                   alt=""
                   aria-hidden="true"
-                  className="absolute inset-0 h-full w-full scale-110 object-cover opacity-70 blur-xl"
+                  className="absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-md"
                   loading="lazy"
                 />
                 <div className="relative z-10 flex h-full items-center justify-center p-7 md:p-9">
